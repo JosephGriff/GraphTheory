@@ -29,7 +29,8 @@ def compile(profix):
             # Connect first NFA's accept state to the second's initial.
             nfa1.accept.edge1 = nfa2.initial
             # Push Nfa to the stack.
-            nfastack.append(nfa1.initial, nfa2.accept)
+            newnfa = nfa(nfa1.initial, nfa2.accept)
+            nfastack.append(newnfa)
 
 
         elif c == '|':
@@ -47,4 +48,40 @@ def compile(profix):
             nfa1.accept.edge1 = accept
             nfa2.accept.edge2 = accept
             # Push new NFA to the stack
-            nfastack.append(nfa(initial,accept))
+            newnfa = nfa(initial,accept)
+            nfastack.append(newnfa)
+
+        elif c == '*':
+            # Pop a single nfa from the stack
+            nfa1 = nfastack.pop()
+            # Create new initial and accept states
+            initial = state()
+            accept = state()
+            # Join the new intial state to nfa1's initial state and the new accept state.
+            initial.edge1 = nfa1.initial
+            initial.edge2 = accept
+            # Join the old accept state to the new accept state and nfa1's initial state.
+            nfa1.accept.edge1 = nfa1.initial
+            nfa1.accept.edge2 = accept
+            # Push  new nfa to the stack.
+            newnfa = nfa(initial,accept)
+            nfastack.append(newnfa)
+            
+
+        else:
+            # Create new initial and accept states.
+            accept = state()
+            initial = state()
+            # Join the initial state to the accept state using an arrow labelled c.
+            initial.label = c
+            initial.edge1 = accept
+            # Push new nfa to the stack
+            newnfa = nfa(initial,accept)
+            nfastack.append(newnfa)
+
+
+    # nfastack should only have a single nfa on it at the end of a valid regular expression in postfix notation
+    return nfastack.pop()
+
+print(compile("ab.cd.|"))
+print(compile("aa.*"))
