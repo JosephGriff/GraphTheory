@@ -17,3 +17,16 @@ class nfa:
     def __init__(self, initial, accept):
         self.initial = initial
         self.accept = accept
+
+def compile(profix):
+    nfastack = []
+
+    for c in profix:
+        if c == '.':
+            # Pop two NFA's off the stack.
+            nfa2 = nfastack.pop()
+            nfa1 = nfastack.pop()
+            # Connect first NFA's accept state to the second's initial.
+            nfa1.accept.edge1 = nfa2.initial
+            # Push Nfa to the stack.
+            nfastack.append(nfa1.initial, nfa2.accept)
