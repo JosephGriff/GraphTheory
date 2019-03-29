@@ -30,3 +30,21 @@ def compile(profix):
             nfa1.accept.edge1 = nfa2.initial
             # Push Nfa to the stack.
             nfastack.append(nfa1.initial, nfa2.accept)
+
+
+        elif c == '|':
+            # Pop two NFA's off the stack
+            nfa2 = nfastack.pop()
+            nfa1 = nfastack.pop()
+            # Create a new initial state, connect it to initial states
+            # of the two NFA's popped from the stack
+            initial = state()
+            initial.edge1 = nfa1.initial
+            initial.edge2 = nfa2.initial
+            # Create new accept state, connecting the accept states 
+            # of the two NFA's popped from the stack, to the new state.  
+            accept = state()
+            nfa1.accept.edge1 = accept
+            nfa2.accept.edge2 = accept
+            # Push new NFA to the stack
+            nfastack.append(nfa(initial,accept))
