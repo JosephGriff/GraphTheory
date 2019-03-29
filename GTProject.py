@@ -2,7 +2,7 @@
 # G00350112
 # Graph Theory Project 
 # Shunting Yard Algorithm To Convert Regular Expressions from infix to postfix
-
+# http://www.oxfordmathcenter.com/drupal7/node/628
 
 
 # Argument containing a infix regular exspression
@@ -35,6 +35,7 @@ def shunt(infix):
                 pofix, stack = pofix + stack[-1], stack[:-1]
             stack = stack + c
             
+        # Appending the c char onto the pofix regular expression
         else:
             pofix = pofix + c
 
@@ -48,5 +49,5 @@ def shunt(infix):
 
     return pofix
 
-
-
+# Printing out pofix regular expression
+print(shunt("(a.b)|(c*.d)"))
