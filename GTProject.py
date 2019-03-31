@@ -5,9 +5,10 @@
 
 # Argument containing a infix regular exspression
 def shunt(infix):
+    
 
     # Precedence given to the regular exspression using a python dictionary
-    specials = {'*':50, '+':45, '?':45, '.':40, '|':30}
+    specials = {'*':50, '+':45, '?':45, '.':40, '$': 35, '|':30}
 
     # Postfix regular exspression and stack is where the operators will be pushed and poped. 
     pofix = ""
@@ -73,8 +74,7 @@ def compile(profix):
             # Connect first NFA's accept state to the second's initial.
             nfa1.accept.edge1 = nfa2.initial
             # Push Nfa to the stack.
-            newnfa = nfa(nfa1.initial, nfa2.accept)
-            nfastack.append(newnfa)
+            nfastack.append(nfa(nfa1.initial, nfa2.accept))
 
         # Operator - OR 
         elif c == '|':
@@ -88,8 +88,7 @@ def compile(profix):
             accept = state()
             nfa1.accept.edge1, nfa2.accept.edge2 = accept, accept
             # Push new NFA to the stack
-            newnfa = nfa(initial,accept)
-            nfastack.append(newnfa)
+            nfastack.append(nfa(initial, accept))
 
         # Operator - 0 or more
         elif c == '*':
@@ -102,8 +101,7 @@ def compile(profix):
             # Join the old accept state to the new accept state and nfa1's initial state.
             nfa1.accept.edge1, nfa1.accept.edge2 = nfa1.initial, accept
             # Push  new nfa to the stack.
-            newnfa = nfa(initial,accept)
-            nfastack.append(newnfa)
+            nfastack.append(nfa(initial, accept))
 
         # Operator - 1 or more
         elif c == '+':
@@ -116,9 +114,7 @@ def compile(profix):
             #join the old accept state to the new accept, and nfa1's initial state
             nfa1.accept.edge1, nfa1.accept.edge2 = nfa1.initial, accept
             #push new nfa to stack
-            new_nfa = nfa(initial, accept)
-            nfastack.append(new_nfa)
-
+            nfastack.append(nfa(initial, accept))
         # Operator - 1 or 0
         elif c == "?":
             # pop a single nfa from the stack
@@ -132,9 +128,20 @@ def compile(profix):
             # point popped nfa's accept state edge1 to new accept state 
             nfa1.accept.edge1 = accept
             # push new nfa to stack
-            new_nfa = nfa(initial, accept)
-            nfastack.append(new_nfa)
-            
+            nfastack.append(nfa(initial, accept))
+
+         # 0
+        elif c == '$':
+
+            # Pop a single NFA from the stack
+            nfa1 = nfastack.pop()
+            # Create new initial and accept states
+            initial, accept = state(), state()
+            # Join the new initial state to nfa1s initial state and to the new accept state
+            initial.edge1, initial.edge2 = nfa1.initial, accept
+            # Push the new NFA to the stack
+            nfastack.append(nfa(initial, accept))
+                        
         # Handle all non special characters
         else:
             # Create new initial and accept states.
@@ -142,8 +149,7 @@ def compile(profix):
             # Join the initial state to the accept state using an arrow labelled c.
             initial.label, initial.edge1 = c, accept
             # Push new nfa to the stack
-            newnfa = nfa(initial,accept)
-            nfastack.append(newnfa)
+            nfastack.append(nfa(initial, accept))
 
     # nfastack should only have a single nfa on it at the end of a valid regular expression in postfix notation
     return nfastack.pop()
@@ -207,8 +213,8 @@ def match(infix, string):
 
 
 # Tests
-infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*","a.(b.b)*.c","a?c*b", "b+c?a"]
-strings = ["", "abc", "abbc", "abcc", "abad", "abbbc"]
+infixes = ["a.b.c*", "a.(b|d).c*", "(a.(b|d))*","a.(b.b)*.c","a?", "a.b.c+", "b$"]
+strings = ["", "abc", "abbc", "abcc", "abad", "abbbc", "a"]
 
 for i in infixes:
     for s in strings:
