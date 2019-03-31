@@ -41,7 +41,8 @@ The end product of the program consists of 4 functions, which contents are comme
 ## Shunt
 
 The shunt function takes a regular expression from 'infix' notation to 'postfix' notation.
-    Some examples of this are:
+ 
+Some examples of this are:
 
 ## Compile
 
