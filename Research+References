@@ -1,0 +1,24 @@
+Useful links used during research:
+
+- The Lecture videos were by far the most useful as our lecturer went through all the 
+  code methodically aswell as demonstrating the code in drawings before each coding session video.
+
+- Links that were very useful in the initial stage of understanding the Shunting algorithm:
+    https://en.wikipedia.org/wiki/Regular_expression
+    http://www.cs.may.ie/staff/jpower/Courses/Previous/parsing/node5.html
+    https://brilliant.org/wiki/shunting-yard-algorithm/
+    https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+    https://www.quora.com/What-is-the-shunting-yard-algorithm
+    https://algs4.cs.princeton.edu/lectures/54RegularExpressions.pdf
+
+- Links that extended my knowledge of the program and helped me to implement other special characters:
+    https://stackoverflow.com/questions/16877546/modifying-the-shunting-yard-algorithm-c
+    https://stackoverflow.com/questions/36870168/operator-precedence-in-regular-expressions
+    http://www.oxfordmathcenter.com/drupal7/node/628
+    https://www.tldp.org/LDP/Bash-Beginners-Guide/html/sect_04_01.html
+    http://www.jflap.org/tutorial/regular/index.html
+    
+- Video link that also helped on how to create nfa's using regular expressions through visual aid of drawings:
+    https://www.youtube.com/watch?v=RYNN-tb9WxI
+    
+ 
